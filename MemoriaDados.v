@@ -9,7 +9,7 @@ module MemoriaDados(Resultado,DadosEscrita,MemRead,MemWrite,ReadData,Clock);
 	always@(negedge Clock)
 	begin
 
-		// Gravando na Memoria	
+		/*// Gravando na Memoria	
 		if(F == 0)
 		begin
 			Memoria[0] = 32'b00000000000000000000000000000111;
@@ -17,7 +17,7 @@ module MemoriaDados(Resultado,DadosEscrita,MemRead,MemWrite,ReadData,Clock);
 			Memoria[2] = 32'b00000000000000000000000001010001;
 			Memoria[3] = 32'b00000000000000000000000001001001;
 		F <= 1;
-		end
+		end*/
 		//////////////////////
 	
 		if(MemWrite==1'B1)

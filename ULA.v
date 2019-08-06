@@ -103,35 +103,35 @@ module ULA(Dados_1,Dados_2,Opcode,funct,OpALU,Zero,Resultado); // Dados com 32 b
 			6'B001101: // diff (13)
 			begin
 				Resultado = 32'B0;
-				Resultado[0] = (Dados_1 != Dados_2);  			// Set less than (SLT)
+				Resultado[0] = (Dados_1 != Dados_2);  			// Set less than ()
 				Zero = 1'B0;
 			end
 			
 			6'B001111: // sbt (15)
 			begin
 				Resultado = 32'B0;
-				Resultado[0] = (Dados_1 > Dados_2);  			// Set less than (SLT)
+				Resultado[0] = (Dados_1 > Dados_2);  			// Set less than ()
 				Zero = 1'B0;
 			end
 			
 			6'B010000: // equal (SET) (16)
 			begin
 				Resultado = 32'B0;
-				Resultado[0] = (Dados_1 == Dados_2);  			// Set less than (SLT)
+				Resultado[0] = (Dados_1 == Dados_2);  			// Set less than ()
 				Zero = 1'B0;
 			end
 			
 			6'B010001: // sbte (17)
 			begin
 				Resultado = 32'B0;
-				Resultado[0] = (Dados_1 >= Dados_2);  			// Set less than (SLT)
+				Resultado[0] = (Dados_1 >= Dados_2);  			// Set less than ()
 				Zero = 1'B0;
 			end
 			
 			6'B010010: // slte (18)
 			begin
 				Resultado = 32'B0;
-				Resultado[0] = (Dados_1 <= Dados_2);  			// Set less than (SLT)
+				Resultado[0] = (Dados_1 <= Dados_2);  			// Set less than ()
 				Zero = 1'B0;
 			end
 			
