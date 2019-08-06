@@ -8,7 +8,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 	always@(Opcode)
 	begin
 		Halt = 1'B0;
-		TypeJR = 1'B0;
+
 		case(Opcode)
 			6'B000000: // ARITMETICAS
 			begin
@@ -21,6 +21,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;
 			end
 			
 			6'B000001: // LOGICAS
@@ -34,6 +35,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;
 			end
 			
 			6'B000010: // ADDI
@@ -46,7 +48,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;
 			end
 			
 			6'B000011: // MOVE
@@ -59,7 +62,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR   = 1'B0;
 			end
 			
 			6'B000100: // SLT
@@ -72,7 +76,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;		
 			end
 			
 			6'B000101: // Jump
@@ -85,7 +90,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B1;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;			
 			end
 
 			6'B000110: // Load
@@ -98,7 +104,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B1;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;		
 			end
 			
 			6'B000111: // Store
@@ -111,7 +118,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B1;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;		
 			end
 			
 			6'B001000: // IN
@@ -125,7 +133,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;		
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;		
 			end	
 	
 			6'B001001: // OUT
@@ -138,7 +147,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
-			OpALU 	= 6'B000000;		
+			OpALU 	= 6'B000000;
+			TypeJR   = 1'B0;		
 			end
 			
 			
@@ -152,7 +162,8 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemRead 	= 1'B0;
 			MemWrite = 1'B0;
 			Desvio 	= 1'B1;
-			OpALU 	= 6'B000000;			
+			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;		
 			end
 			
 			6'B001011: // BNE
@@ -166,6 +177,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B1;
 			OpALU 	= 6'B000000;
+			TypeJR   = 1'B0;
 			end
 			
 			6'B001100: // NOP (12)
@@ -179,6 +191,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR   = 1'B0;
 			end
 			
 			6'B001101: // diff (13)
@@ -192,6 +205,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR   = 1'B0;
 			end
 			
 			6'B001111: // sbt (15)
@@ -205,6 +219,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;
 			end
 			
 			6'B010000: // equal (SET) (16)
@@ -218,6 +233,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;
 			end
 			
 			6'B010001: // sbte (17)
@@ -231,6 +247,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR = 1'B0;
 			end
 			
 			6'B010010: // slte (18)
@@ -244,6 +261,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;	
+			TypeJR = 1'B0;
 			end
 			
 			6'B010011: // JR (19)
@@ -271,6 +289,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;			
+			TypeJR   = 1'B0;
 			end
 			
 			default: // Not operation
@@ -284,6 +303,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
+			TypeJR   = 1'B0;
 			end
 		endcase
 	end

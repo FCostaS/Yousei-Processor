@@ -32,7 +32,7 @@ Display4,Display5,Display6,Display7,Display8,Output);
 	Mux_4 Mux_4(ReadData,DataIO,Resultado,Mem2Reg,M2R);												// MUX Memory/ModuloIO/ULAResult																												//
 	UnidadedeControle UC(Instrucao[31:26],OpIO,OpALU,MemRead,MemWrite,RegWrite
 								,AluSrc,RegDst,Desvio,Mem2Reg,HaltIAS,TypeJR);
-	ModuloIO ModuloIO(Clock,Switches,Set,HaltIAS,OpIO,ImediatoExtendido,Dados_1,Output,Halt,DataIO); // Modulo I/O										 		 // Extensor de Sina																					
+	ModuloIO ModuloIO(Clock,Reset,Switches,Set,HaltIAS,OpIO,ImediatoExtendido,Dados_1,Output,Halt,DataIO); // Modulo I/O										 		 // Extensor de Sina																					
 	Interface TEC(Clock,DataIO,Swap,Type,MonitorReg,Halt,Output,Display1,Display2,Display3,Display4,
 	Display5,Display6,Display7,Display8,indice); 														 // Interface de Comunicacao
 	Temporizador TEMP2S(Clock50M,Clock);                                                              
