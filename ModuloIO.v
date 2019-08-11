@@ -1,10 +1,10 @@
-module ModuloIO(Clock,Reset,Switches,Set,HaltIAS,OpIO,Endereco,DadosSaida,Output,RegTemp,DataIO);
+module ModuloIO(Clock,Reset,Switches,Set,HaltIAS,OpIO,Endereco,DadosSaida,Output,detector_out,DataIO);
 	input OpIO,HaltIAS,Set,Clock,Reset;
 	input [31:0] Endereco,DadosSaida;
 	input [12:0] Switches;
 	output wire [31:0] DataIO;
 	output reg [31:0] Output;
-	output reg RegTemp;
+	output reg detector_out;
 	reg [31:0] Data[1:0];
 	reg INPUT;
 	wire ResetCorrection;
@@ -29,71 +29,46 @@ module ModuloIO(Clock,Reset,Switches,Set,HaltIAS,OpIO,Endereco,DadosSaida,Output
 		end
 	end
 	
-	always @( posedge Clock, posedge ResetCorrection )
-   begin
-		INPUT = OpIO && HaltIAS;
-		if( ResetCorrection )
-			 state <= 1'b0;
-		else
-		begin
-			case( state )
-			1'b0: // A
-			begin
-				 if(INPUT == 1'B0 && Set == 1'B0)
-				 begin
-					state <= 1'B0;
-				 end
-				 else if (INPUT == 1'B0 && Set == 1'B1)
-				 begin
-					state <= 1'B0 ;
-				 end
-				 else if (INPUT == 1'B1 && Set == 1'B0)
-				 begin
-					state <= 1'B1;
-				 end
-				 else
-				 begin
-					state <= 1'B1;
-				 end
-			end
+	parameter  A=1'b0, B=1'b1;
+			  
+	reg current_state, next_state;
 
-			1'b1: // B
-			begin
-				if(INPUT == 1'B0 && Set == 1'B0)
-				begin
-					state <= 1'B0;
-				end
-				else if (INPUT == 1'B0 && Set == 1'B1)
-				begin
-					state <= 1'B1;
-				end
-				else if (INPUT == 1'B1 && Set == 1'B0)
-				begin
-					state <= 1'B0;
-				end
-				else
-				begin
-					state <= 1'B1;
-				end
-			end
-		   endcase
-		end
-	end
-	
-	always @( posedge Clock, posedge ResetCorrection )
+	always @(negedge Clock, negedge Reset)
 	begin
-		if( ResetCorrection )
-		begin
-			RegTemp <= 0;
-		end
-			else if( state == 1'b0 )
-			begin
-				RegTemp <= 0;
-			end
-				else
-				begin
-					RegTemp <= 1;
-				end
+	 if(Reset==1) 
+		current_state <= A;
+		 else
+		 current_state <= next_state;
+	end 
+
+	
+	always @(current_state,HaltIAS,Set)
+	begin
+	
+	 case(current_state) 
+		 A:begin
+		  if(HaltIAS==0)
+				next_state <= A;
+		  else
+			next_state <= B;
+		 end
+		 B:begin
+		  if(Set==1)
+			next_state <= B;
+		  else
+			next_state <= A;
+		 end
+		 default: next_state <= A;
+	 endcase
+	 
+	end
+
+	always @(current_state)
+	begin 
+	 case(current_state) 
+		 A:  detector_out <= 0;
+		 B:  detector_out <= 1;
+	 endcase
 	end
 	
 	
