@@ -1,5 +1,5 @@
 Flow report for ProcessadorAOC
-Wed Jun 26 22:26:16 2019
+Tue Aug 06 22:54:22 2019
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,17 +40,17 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Jun 26 22:26:16 2019       ;
+; Flow Status                        ; Successful - Tue Aug 06 22:54:22 2019       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; ProcessadorAOC                              ;
 ; Top-level Entity Name              ; ProcessadorAOC                              ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 4,191 / 114,480 ( 4 % )                     ;
-;     Total combinational functions  ; 4,037 / 114,480 ( 4 % )                     ;
-;     Dedicated logic registers      ; 1,200 / 114,480 ( 1 % )                     ;
-; Total registers                    ; 1200                                        ;
+; Total logic elements               ; 4,274 / 114,480 ( 4 % )                     ;
+;     Total combinational functions  ; 4,042 / 114,480 ( 4 % )                     ;
+;     Dedicated logic registers      ; 1,199 / 114,480 ( 1 % )                     ;
+; Total registers                    ; 1199                                        ;
 ; Total pins                         ; 106 / 529 ( 20 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 5,120 / 3,981,312 ( < 1 % )                 ;
@@ -64,7 +64,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 06/26/2019 22:19:19 ;
+; Start date & time ; 08/06/2019 22:51:12 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ProcessadorAOC      ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
 +-------------------------------------+----------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 110073159962005.156159835926661        ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID               ; 2543711158273.156514267205576          ; --            ; --          ; --             ;
 ; EDA_NETLIST_WRITER_OUTPUT_DIR       ; simulation/modelsim/                   ; --            ; --          ; eda_simulation ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                            ; --            ; --          ; eda_simulation ;
 ; EDA_RUN_TOOL_AUTOMATICALLY          ; Off                                    ; --            ; --          ; eda_simulation ;
@@ -103,12 +103,12 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:51     ; 1.0                     ; 1059 MB             ; 00:01:20                           ;
-; Fitter               ; 00:04:15     ; 1.0                     ; 1862 MB             ; 00:05:29                           ;
-; Assembler            ; 00:00:06     ; 1.0                     ; 845 MB              ; 00:00:06                           ;
-; Timing Analyzer      ; 00:00:15     ; 1.7                     ; 1128 MB             ; 00:00:16                           ;
-; EDA Netlist Writer   ; 00:00:09     ; 1.0                     ; 1113 MB             ; 00:00:09                           ;
-; Total                ; 00:05:36     ; --                      ; --                  ; 00:07:20                           ;
+; Analysis & Synthesis ; 00:00:45     ; 1.0                     ; 4818 MB             ; 00:00:59                           ;
+; Fitter               ; 00:01:58     ; 1.0                     ; 5479 MB             ; 00:02:13                           ;
+; Assembler            ; 00:00:04     ; 1.0                     ; 4698 MB             ; 00:00:04                           ;
+; Timing Analyzer      ; 00:00:10     ; 1.7                     ; 4995 MB             ; 00:00:10                           ;
+; EDA Netlist Writer   ; 00:00:06     ; 1.0                     ; 4709 MB             ; 00:00:06                           ;
+; Total                ; 00:03:03     ; --                      ; --                  ; 00:03:32                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -117,11 +117,11 @@ refer to the applicable agreement for further details.
 +----------------------+------------------+------------+------------+----------------+
 ; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +----------------------+------------------+------------+------------+----------------+
-; Analysis & Synthesis ; jimmy-15IKB      ; Linux Mint ; 19         ; x86_64         ;
-; Fitter               ; jimmy-15IKB      ; Linux Mint ; 19         ; x86_64         ;
-; Assembler            ; jimmy-15IKB      ; Linux Mint ; 19         ; x86_64         ;
-; Timing Analyzer      ; jimmy-15IKB      ; Linux Mint ; 19         ; x86_64         ;
-; EDA Netlist Writer   ; jimmy-15IKB      ; Linux Mint ; 19         ; x86_64         ;
+; Analysis & Synthesis ; DESKTOP-UUN751E  ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; DESKTOP-UUN751E  ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; DESKTOP-UUN751E  ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; DESKTOP-UUN751E  ; Windows 10 ; 10.0       ; x86_64         ;
+; EDA Netlist Writer   ; DESKTOP-UUN751E  ; Windows 10 ; 10.0       ; x86_64         ;
 +----------------------+------------------+------------+------------+----------------+
 
 
