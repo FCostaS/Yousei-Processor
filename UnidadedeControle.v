@@ -134,7 +134,7 @@ module UnidadedeControle(Opcode,OpIO,OpALU,MemRead,MemWrite,RegWrite,AluSrc,RegD
 			MemWrite = 1'B0;
 			Desvio 	= 1'B0;
 			OpALU 	= 6'B000000;
-			TypeJR = 1'B0;		
+			TypeJR   = 1'B0;		
 			end	
 	
 			6'B001001: // OUT

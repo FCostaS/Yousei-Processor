@@ -70,7 +70,7 @@ set_location_assignment PIN_AC27 -to Switches[2]
 set_location_assignment PIN_AC28 -to Switches[1]
 set_location_assignment PIN_AB28 -to Switches[0]
 set_location_assignment PIN_M21 -to Swap
-set_location_assignment PIN_N21 -to Set
+set_location_assignment PIN_Y24 -to Set
 set_location_assignment PIN_R24 -to Reset
 set_location_assignment PIN_AG14 -to Clock50M
 set_location_assignment PIN_G18 -to Display1[6]
