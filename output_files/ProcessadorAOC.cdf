@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE115F29) Path("/home/jimmy/AlguemMeAJUDA_restored/output_files/") File("ProcessadorAOC.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CE115F29) Path("/home/jimmy/Yousei-Processor-master20/output_files/") File("ProcessadorAOC.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

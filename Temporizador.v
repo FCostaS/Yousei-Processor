@@ -6,7 +6,7 @@ module Temporizador(Clock50M,Clock);
 	always@(posedge Clock50M)
 	begin
 		//Clock <= !Clock;
-		if( Counter < 1*50*10000 ) //100000
+		if( Counter < 2*50*10000 ) //100000
 		begin
 			Counter <= Counter + 1;
 		end

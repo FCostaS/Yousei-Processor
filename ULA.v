@@ -67,7 +67,7 @@ module ULA(Dados_1,Dados_2,Opcode,funct,OpALU,Zero,Resultado); // Dados com 32 b
 				end
 			6'B001000:
 				begin
-				Resultado = Dados_1 + Dados_2; 				// Entrada  (IN)
+				Resultado = Dados_1; 				// Entrada  (IN)
 				Zero = 1'B0;
 				end
 			6'B001001:

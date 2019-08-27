@@ -10,17 +10,14 @@ module ProgramCounter(InputPC,Endereco,Clock,Reset,Halt);
 			begin
 				Endereco = 32'B0;
 			end
-				else
-				begin			
-					if(Halt==1'B1)
-					begin
-						Endereco = Endereco;
-					end
-						else
-						begin
-							Endereco = InputPC;
-						end			
+				else if(Halt==1'B1)
+				begin
+					Endereco = Endereco;
 				end
+					else
+					begin
+						Endereco = InputPC;
+					end	
 	end
 	
 endmodule
