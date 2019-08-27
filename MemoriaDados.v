@@ -2,7 +2,7 @@ module MemoriaDados(Resultado,DadosEscrita,MemRead,MemWrite,ReadData,Clock);
 	input  [31:0] Resultado,DadosEscrita;
 	input MemRead,MemWrite,Clock;
 	output reg [31:0] ReadData;
-	integer F = 0;
+	//integer F = 0;
 	
 	reg[31:0] Memoria[127:0];
 	

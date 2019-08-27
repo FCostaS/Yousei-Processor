@@ -1,87 +1,101 @@
-// DeBounce_v.v
-
-
-//////////////////////// Button Debounceer ///////////////////////////////////////
-//***********************************************************************
-// FileName: DeBounce_v.v
-// FPGA: MachXO2 7000HE
-// IDE: Diamond 2.0.1 
-//
-// HDL IS PROVIDED "AS IS." DIGI-KEY EXPRESSLY DISCLAIMS ANY
-// WARRANTY OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-// PARTICULAR PURPOSE, OR NON-INFRINGEMENT. IN NO EVENT SHALL DIGI-KEY
-// BE LIABLE FOR ANY INCIDENTAL, SPECIAL, INDIRECT OR CONSEQUENTIAL
-// DAMAGES, LOST PROFITS OR LOST DATA, HARM TO YOUR EQUIPMENT, COST OF
-// PROCUREMENT OF SUBSTITUTE GOODS, TECHNOLOGY OR SERVICES, ANY CLAIMS
-// BY THIRD PARTIES (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF),
-// ANY CLAIMS FOR INDEMNITY OR CONTRIBUTION, OR OTHER SIMILAR COSTS.
-// DIGI-KEY ALSO DISCLAIMS ANY LIABILITY FOR PATENT OR COPYRIGHT
-// INFRINGEMENT.
-//
-// Version History
-// Version 1.0 04/11/2013 Tony Storey
-// Initial Public Release
-// Small Footprint Button Debouncer
-
-`timescale 1 ns / 100 ps
-module  DeBounce 
-	(
-	input 			clk, n_reset, button_in,				// inputs
-	output reg 	DB_out													// output
-	);
-//// ---------------- internal constants --------------
-	parameter N = 11 ;		// (2^ (11) )/ 50 MHz = 41 us debounce time
-////---------------- internal variables ---------------
-	reg  [N-1 : 0]	q_reg;							// timing regs
-	reg  [N-1 : 0]	q_next;
-	reg DFF1, DFF2;									// input flip-flops
-	wire q_add;											// control flags
-	wire q_reset;
-//// ------------------------------------------------------
-
-////contenious assignment for counter control
-	assign q_reset = (DFF1  ^ DFF2);		// xor input flip flops to look for level chage to reset counter
-	assign  q_add = ~(q_reg[N-1]);			// add to counter when q_reg msb is equal to 0
-	
-//// combo counter to manage q_next	
-	always @ ( q_reset, q_add, q_reg)
-		begin
-			case( {q_reset , q_add})
-				2'b00 :
-						q_next <= q_reg;
-				2'b01 :
-						q_next <= q_reg + 1;
-				default :
-						q_next <= { N {1'b0} };
-			endcase 	
-		end
-	
-//// Flip flop inputs and q_reg update
-	always @ ( posedge clk )
-		begin
-			if(n_reset ==  1'b0)
-				begin
-					DFF1 <= 1'b0;
-					DFF2 <= 1'b0;
-					q_reg <= { N {1'b0} };
-				end
-			else
-				begin
-					DFF1 <= button_in;
-					DFF2 <= DFF1;
-					q_reg <= q_next;
-				end
-		end
-	
-//// counter control
-	always @ ( posedge clk )
-		begin
-			if(q_reg[N-1] == 1'b1)
-					DB_out <= DFF2;
-			else
-					DB_out <= DB_out;
-		end
-
-	endmodule
-
+module DeBounce(
+    input clock,
+    input reset,
+    input button,
+    output reg out
+    );
+ 
+localparam N = 2;        //for a 10ms tick
+ 
+reg [N-1:0]count;
+wire tick;
+ 
+ 
+// the counter that will generate the tick.
+ 
+always @ (posedge clock or posedge reset)
+    begin
+        if(reset)
+            count <= 0;
+        else
+            count <= count + 1;        
+    end
+     
+assign tick = &count;        //AND every bit of count with itself. Tick will only go high when all 19 bits of count are 1, i.e. after 10ms
+ 
+// now for the debouncing FSM
+ 
+localparam[2:0]                     //defining the various states to be used
+                zero = 3'b000, 
+                high1 = 3'b001,
+                high2 = 3'b010,
+                high3 = 3'b011,
+                one = 3'b100,
+                low1 = 3'b101,
+                low2 = 3'b110,
+                low3 = 3'b111;
+ 
+reg [2:0]state_reg;
+reg [2:0]state_next;
+                 
+always @ (posedge clock or posedge reset)      
+    begin
+        if (reset)
+            state_reg <= zero;
+        else
+            state_reg <= state_next;
+    end
+     
+ 
+always @ (*)
+    begin
+        state_next <= state_reg;  // to make the current state the default state
+        out <= 1'b0;                    // default output low
+         
+        case(state_reg)
+            zero:
+                if (button)                    //if button is detected go to next state high1
+                    state_next <= high1;
+            high1:
+                if (~button)                //while here if button goes back to zero then input is not yet stable and go back to state zero
+                    state_next <= zero;
+                else if (tick)                //but if button remains high even after 10 ms, go to next state high2.
+                    state_next <= high2;
+            high2:
+                if (~button)                //while here if button goes back to zero then input is not yet stable and go back to state zero
+                    state_next <= zero;
+                else if (tick)                //else if after 20ms (10ms + 10ms) button is still high go to high3
+                    state_next <= high3;
+            high3:
+                if (~button)                //while here if button goes back to zero then input is not yet stable and go back to state zero
+                    state_next <= zero;
+                else if (tick)                //and finally even after 30 ms input stays high then it is stable enough to be considered a valid input, go to state one
+                    state_next <= one;
+             
+            one:                                //debouncing eliminated make output high, now here I'll check for bouncing when button is released
+                begin
+                    out <= 1'b1;
+                        if (~button)        //if button appears to be released go to next state low1
+                            state_next <=  low1;
+                end
+            low1:
+                if (button)                //while here if button goes back to high then input is not yet stable and go back to state one
+                    state_next <= one;
+                else if (tick)            //else if after 10ms it is still high go to next state low2
+                    state_next <= low2;
+            low2:
+                if (button)                //while here if button goes back to high then input is not yet stable and go back to state one
+                    state_next <= one;
+                else if (tick)            //else if after 20ms it is still high go to next state low3
+                    state_next <= low3;
+            low3:
+                if (button)                //while here if button goes back to high then input is not yet stable and go back to state one
+                    state_next <= one;
+                else if (tick)            //after 30 ms if button is low it has actually been released and bouncing eliminated, go back to zero state to wait for next input.
+                    state_next <= zero;
+            default state_next <= zero;
+             
+        endcase
+    end
+ 
+endmodule

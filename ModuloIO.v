@@ -1,64 +1,79 @@
-module ModuloIO(Clock,Reset,Switches,Set,HaltIAS,OpIO,Endereco,DadosSaida,Output,detector_out,DataIO);
-	input OpIO,HaltIAS,Set,Clock,Reset;
+module ModuloIO(Clock,Switches,Set,HaltIAS,OpIO,Endereco,DadosSaida,Output,RegTemp,DataIO);
+	input OpIO,HaltIAS,Set,Clock;
 	input [31:0] Endereco,DadosSaida;
 	input [12:0] Switches;
+	
+	// Data for Output
 	output wire [31:0] DataIO;
 	output reg [31:0] Output;
-	output reg detector_out;
-	reg [31:0] Data[1:0];
-	reg INPUT;
-	wire ResetCorrection;
 	
-	reg [1:0] state;
-
+	// State Machine for IO
+	output reg RegTemp;
+	parameter  A=1'b0, B=1'b1;
+	reg current_state, next_state;
+	wire Input;
+	//wire SetDebounce;
+	
 	assign DataIO = {{19{1'B0}},Switches};
-	//assign INPUT = (OpIO && HaltIAS);
-	
-	assign ResetCorrection = ~Reset;
+	assign Input = OpIO && HaltIAS;
 
 	always@(posedge Clock)
 	begin
 		if(OpIO == 1'B1)
 		begin
-			if(~HaltIAS)
+			if(HaltIAS == 1'B0)
 			begin
-				Data[Endereco] = DadosSaida;
-				Output = Data[Endereco];
+				Output <= DadosSaida;
 			end
-
 		end
 	end
-	
-	parameter  A=1'b0, B=1'b1;
-			  
-	reg current_state, next_state;
 
-	always @(negedge Clock, negedge Reset)
+	/*always@(negedge Clock)
 	begin
-	 if(Reset==1) 
-		current_state <= A;
-		 else
-		 current_state <= next_state;
+	
+		if( Input ) // Eh IO e quero Halt
+		begin
+			
+			if(~RegTemp)
+			begin
+				RegTemp = 1'B1;
+			end
+			
+			if(~Set)
+			begin
+				RegTemp = 1'B0;
+			end
+		
+		end
+		
+	end*/
+
+	always @(negedge Clock)
+	begin
+		current_state <= next_state;
 	end 
 
 	
-	always @(current_state,HaltIAS,Set)
+	always @(current_state,Input,Set)
 	begin
 	
-	 case(current_state) 
-		 A:begin
-		  if(HaltIAS==0)
+	 case(current_state)
+		 A:
+		 begin
+		  if(Input)
+				next_state <= B;
+		  else
 				next_state <= A;
-		  else
-			next_state <= B;
 		 end
-		 B:begin
-		  if(Set==1)
-			next_state <= B;
-		  else
+		 
+		 B:
+		 begin
+		  if(Set)
 			next_state <= A;
+		  else
+			next_state <= B;
 		 end
-		 default: next_state <= A;
+		 
 	 endcase
 	 
 	end
@@ -66,8 +81,8 @@ module ModuloIO(Clock,Reset,Switches,Set,HaltIAS,OpIO,Endereco,DadosSaida,Output
 	always @(current_state)
 	begin 
 	 case(current_state) 
-		 A:  detector_out <= 0;
-		 B:  detector_out <= 1;
+		 A:  RegTemp <= 0;
+		 B:  RegTemp <= 1;
 	 endcase
 	end
 	
